@@ -20,7 +20,8 @@ export default function SearchView() {
     const delayDebounceFn = setTimeout(async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(`http://localhost:5000/api/search?q=${encodeURIComponent(query)}`);
+        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+        const response = await fetch(`${apiUrl}/api/search?q=${encodeURIComponent(query)}`);
         if (!response.ok) throw new Error('Search request failed');
 
         const data = await response.json();
@@ -47,7 +48,8 @@ export default function SearchView() {
       iframe.style.width = '500px';
       iframe.style.height = '500px';
       iframe.style.zIndex = '9999';
-      iframe.src = `http://localhost:5000/api/download-pdf?fileId=${selectedFile.id}`;
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      iframe.src = `${apiUrl}/api/download-pdf?fileId=${selectedFile.id}`;
 
       document.body.appendChild(iframe);
 
